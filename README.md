@@ -135,4 +135,14 @@ GET  /api/admin/security-logs  → Attacker logs (auth required)
 
 
 https://github.com/user-attachments/assets/5dfecb0e-2edf-465e-aa22-4ac163cf26a2
+<img width="1600" height="589" alt="WhatsApp Image 2026-07-10 at 3 40 46 PM" src="https://github.com/user-attachments/assets/050dd2dd-1983-42da-b2cd-ae49954071b2" />
+<img width="1600" height="747" alt="WhatsApp Image 2026-07-10 at 3 55 56 PM" src="https://github.com/user-attachments/assets/1f8d9b5c-56cb-4b31-a4b9-8d3becddc554" />
+<img width="1600" height="760" alt="WhatsApp Image 2026-07-10 at 3 51 50 PM" src="https://github.com/user-attachments/assets/15aee56a-103c-452d-886e-dfed6a77828d" />
+<img width="1600" height="778" alt="WhatsApp Image 2026-07-10 at 3 51 19 PM" src="https://github.com/user-attachments/assets/e6d69829-7bfb-4d44-b117-0a3522af1ccb" />
+<img width="1600" height="497" alt="WhatsApp Image 2026-07-10 at 3 42 32 PM" src="https://github.com/user-attachments/assets/d31ddd87-5793-48d9-b708-e835882e729b" />
+
+
+https://github.com/user-attachments/assets/0b3e2b37-f1a2-453f-88af-222c0a9db273
+
+
 
