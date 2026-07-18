@@ -114,7 +114,9 @@ npx serve .
 
 - **admins** — Admin user accounts with hashed passwords
 - **otps** — OTP codes with expiry (login & password reset)
-- **security_logs** — Attacker details (IP, device, pages visited)
+- **
+
+security_logs** — Attacker details (IP, device, pages visited)
 - **sessions** — Active JWT sessions
 
 ## 🌐 API Endpoints
@@ -128,3 +130,9 @@ POST /api/auth/logout          → Invalidate session
 GET  /api/admin/dashboard-stats → Real dashboard stats (auth required)
 GET  /api/admin/security-logs  → Attacker logs (auth required)
 ```
+
+
+
+
+https://github.com/user-attachments/assets/5dfecb0e-2edf-465e-aa22-4ac163cf26a2
+
