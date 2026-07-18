@@ -1,0 +1,31 @@
+=====================================================
+  📄 .env FILE — COPY இதை .env என்று SAVE பண்ணு
+=====================================================
+
+Step 1: backend folder-ல .env என்று ஒரு file create பண்ணு
+Step 2: கீழே உள்ள content-ஐ அதுல paste பண்ணு
+Step 3: உன்னோட Gmail details மட்டும் மாத்து
+
+---------- .env FILE CONTENT ----------
+
+PORT=5000
+JWT_SECRET=shopnova_super_secret_key_2026
+EMAIL_USER=உன்னோட_gmail@gmail.com
+EMAIL_PASS=உன்னோட_gmail_app_password
+ADMIN_EMAIL=admin@shopnova.com
+NODE_ENV=development
+
+---------- END OF .env ----------
+
+📌 NOTE:
+- EMAIL_USER / EMAIL_PASS இல்லாமலும் run ஆகும்!
+- DEV mode-ல OTP terminal-ல print ஆகும்
+- Real email வேணும்னா மட்டும் Gmail setup பண்ணு
+
+Gmail App Password எப்படி எடுக்கணும்:
+1. myaccount.google.com → Security
+2. 2-Step Verification → ON பண்ணு
+3. App Passwords → Mail → Generate
+4. அந்த 16-digit password-ஐ EMAIL_PASS-ல போடு
+
+=====================================================

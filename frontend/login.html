@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopNova — Admin Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --secondary: #ec4899;
+      --accent: #8b5cf6;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0a0a1a;
+      --dark2: #111827;
+      --dark3: #1f2937;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255,255,255,0.08);
+      --glass: rgba(255,255,255,0.04);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* LEFT PANEL */
+    .left-panel {
+      width: 45%; background: linear-gradient(135deg, #0f0a1f, #1a0a2e, #0a1a2e);
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 40px; position: relative; overflow: hidden;
+    }
+    .left-panel::before {
+      content: ''; position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(249,115,22,0.2), transparent 60%);
+      top: -100px; left: -100px;
+    }
+    .left-panel::after {
+      content: ''; position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(236,72,153,0.15), transparent 60%);
+      bottom: -100px; right: -100px;
+    }
+    .left-logo {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 28px; font-weight: 700; position: relative; z-index: 2;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    .left-content { position: relative; z-index: 2; }
+    .security-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 50px; padding: 6px 16px; margin-bottom: 24px;
+      font-size: 12px; color: var(--success);
+    }
+    .left-content h1 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 42px; line-height: 1.1; font-weight: 700; margin-bottom: 16px;
+    }
+    .left-content h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .left-content p { color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 36px; }
+    .security-features { display: flex; flex-direction: column; gap: 14px; }
+    .sec-feat {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 16px;
+    }
+    .sec-feat-icon { font-size: 24px; }
+    .sec-feat-title { font-size: 14px; font-weight: 600; }
+    .sec-feat-desc { font-size: 12px; color: var(--text-muted); }
+    .left-footer { position: relative; z-index: 2; color: var(--text-muted); font-size: 12px; }
+
+    /* RIGHT PANEL */
+    .right-panel {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 40px; background: var(--dark); position: relative;
+    }
+    .login-card {
+      width: 100%; max-width: 420px;
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-muted); text-decoration: none; font-size: 13px;
+      margin-bottom: 32px; transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--primary); }
+    .card-header { margin-bottom: 32px; }
+    .card-header h2 { font-family: 'Clash Display', sans-serif; font-size: 30px; font-weight: 700; margin-bottom: 6px; }
+    .card-header p { color: var(--text-muted); font-size: 14px; }
+
+    /* FORM STYLES */
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+    .form-input-wrap { position: relative; }
+    .form-input {
+      width: 100%; padding: 14px 44px 14px 16px;
+      background: var(--dark2); border: 1.5px solid var(--border);
+      border-radius: 14px; color: var(--text); font-size: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.3s;
+      -webkit-appearance: none;
+    }
+    .form-input:focus { outline: none; border-color: var(--primary); background: rgba(249,115,22,0.05); }
+    .form-input::placeholder { color: var(--text-muted); }
+    .input-icon {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 16px; color: var(--text-muted); cursor: pointer;
+      transition: color 0.2s;
+    }
+    .input-icon:hover { color: var(--primary); }
+    .form-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); cursor: pointer; }
+    .checkbox-label input { accent-color: var(--primary); }
+    .forgot-link { font-size: 13px; color: var(--primary); text-decoration: none; font-weight: 500; cursor: pointer; }
+    .forgot-link:hover { text-decoration: underline; }
+
+    .submit-btn {
+      width: 100%; padding: 15px; font-size: 15px; font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none; border-radius: 14px; color: white; cursor: pointer;
+      transition: all 0.3s; font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(249,115,22,0.4); }
+    .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+    /* OTP INPUTS */
+    .otp-grid { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+    .otp-input {
+      width: 56px; height: 62px; text-align: center;
+      background: var(--dark2); border: 1.5px solid var(--border);
+      border-radius: 14px; color: var(--text); font-size: 24px; font-weight: 700;
+      font-family: monospace; transition: all 0.3s;
+      -webkit-appearance: none;
+    }
+    .otp-input:focus { outline: none; border-color: var(--primary); background: rgba(249,115,22,0.05); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
+
+    /* ALERT */
+    .alert {
+      padding: 14px 16px; border-radius: 12px; font-size: 13px;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+    .alert-error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
+    .alert-success { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); color: #6ee7b7; }
+    .alert-info { background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.25); color: #a5b4fc; }
+
+    /* DIVIDER */
+    .divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .divider span { font-size: 12px; color: var(--text-muted); }
+
+    /* ATTEMPTS INDICATOR */
+    .attempts-bar { margin-bottom: 16px; }
+    .attempts-label { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .attempts-track { height: 4px; background: var(--dark3); border-radius: 4px; overflow: hidden; }
+    .attempts-fill { height: 100%; background: var(--danger); border-radius: 4px; transition: width 0.5s; }
+
+    /* PAGE TRANSITIONS */
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.4s ease; }
+
+    /* LOADING SPINNER */
+    .spinner {
+      width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* DEV MODE BADGE */
+    .dev-badge {
+      background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3);
+      border-radius: 10px; padding: 10px 14px;
+      font-size: 12px; color: #c4b5fd; margin-bottom: 16px;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .left-panel { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+  <a href="index.html" class="left-logo">🛒 ShopNova</a>
+  <div class="left-content">
+    <div class="security-badge">🛡️ Military-Grade Security</div>
+    <h1>Secure Admin <span>Access Portal</span></h1>
+    <p>Your admin panel is protected by multi-layer authentication. Unauthorized access attempts are logged and tracked.</p>
+    <div class="security-features">
+      <div class="sec-feat">
+        <div class="sec-feat-icon">🔐</div>
+        <div><div class="sec-feat-title">2-Factor Authentication</div><div class="sec-feat-desc">OTP sent to registered email on every login</div></div>
+      </div>
+      <div class="sec-feat">
+        <div class="sec-feat-icon">🕵️</div>
+        <div><div class="sec-feat-title">Decoy Dashboard Protection</div><div class="sec-feat-desc">Attackers are redirected to a fake dashboard</div></div>
+      </div>
+      <div class="sec-feat">
+        <div class="sec-feat-icon">📊</div>
+        <div><div class="sec-feat-title">Threat Intelligence</div><div class="sec-feat-desc">All suspicious activities are logged & analyzed</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="left-footer">© 2026 ShopNova Admin Security System</div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+  <div class="login-card">
+    <a href="index.html" class="back-btn">← Back to Store</a>
+
+    <!-- PAGE 1: LOGIN -->
+    <div class="page active" id="page-login">
+      <div class="card-header">
+        <h2>Welcome Back 👋</h2>
+        <p>Sign in to your admin account</p>
+      </div>
+
+      <div id="login-alert"></div>
+      <div id="dev-otp-badge" class="dev-badge">🧪 Dev Mode OTP: <strong id="dev-otp-val">------</strong></div>
+
+      <div id="attempts-indicator" style="display:none;" class="attempts-bar">
+        <div class="attempts-label"><span>Failed attempts</span><span id="attempts-text">0/3</span></div>
+        <div class="attempts-track"><div class="attempts-fill" id="attempts-fill" style="width:0%"></div></div>
+      </div>
+
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <div class="form-input-wrap">
+            <input type="text" class="form-input" id="login-username" placeholder="Enter your username" required autocomplete="username">
+            <span class="input-icon">👤</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="form-input-wrap">
+            <input type="password" class="form-input" id="login-password" placeholder="Enter your password" required autocomplete="current-password">
+            <span class="input-icon" id="pwd-toggle" onclick="togglePassword('login-password', 'pwd-toggle')">👁️</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="checkbox-label"><input type="checkbox"> Remember me</label>
+          <span class="forgot-link" onclick="showPage('page-forgot')">Forgot password?</span>
+        </div>
+        <button type="submit" class="submit-btn" id="login-btn">
+          <span id="login-btn-text">🔐 Sign In Securely</span>
+        </button>
+      </form>
+
+
+    </div>
+
+    <!-- PAGE 2: OTP VERIFICATION -->
+    <div class="page" id="page-otp">
+      <div class="card-header">
+        <h2>Verify OTP 🔢</h2>
+        <p id="otp-desc">Enter the 6-digit OTP sent to your email</p>
+      </div>
+      <div id="otp-alert"></div>
+      <div id="dev-otp-badge2" class="dev-badge">🧪 Dev Mode OTP: <strong id="dev-otp-val2">------</strong></div>
+
+      <div class="otp-grid">
+        <input type="text" maxlength="1" class="otp-input" id="o1" oninput="otpMove(this,'o2')" onkeydown="otpBack(event,this,'')">
+        <input type="text" maxlength="1" class="otp-input" id="o2" oninput="otpMove(this,'o3')" onkeydown="otpBack(event,this,'o1')">
+        <input type="text" maxlength="1" class="otp-input" id="o3" oninput="otpMove(this,'o4')" onkeydown="otpBack(event,this,'o2')">
+        <input type="text" maxlength="1" class="otp-input" id="o4" oninput="otpMove(this,'o5')" onkeydown="otpBack(event,this,'o3')">
+        <input type="text" maxlength="1" class="otp-input" id="o5" oninput="otpMove(this,'o6')" onkeydown="otpBack(event,this,'o4')">
+        <input type="text" maxlength="1" class="otp-input" id="o6" oninput="otpMove(this,'')" onkeydown="otpBack(event,this,'o5')">
+      </div>
+
+      <div style="text-align:center; margin-bottom:20px;">
+        <span id="otp-timer" style="font-size:13px; color:var(--text-muted);">⏱ Expires in <span id="otp-countdown">10:00</span></span>
+      </div>
+
+      <button class="submit-btn" id="otp-btn" onclick="handleOTPVerify()">
+        <span id="otp-btn-text">✅ Verify & Login</span>
+      </button>
+
+      <div style="text-align:center; margin-top:16px;">
+        <span style="font-size:13px; color:var(--text-muted);">Didn't receive?</span>
+        <button onclick="resendOTP()" style="background:none;border:none;color:var(--primary);font-size:13px;cursor:pointer;font-weight:600;margin-left:6px;">Resend OTP</button>
+      </div>
+      <div style="text-align:center; margin-top:10px;">
+        <span class="forgot-link" onclick="showPage('page-login')">← Back to Login</span>
+      </div>
+    </div>
+
+    <!-- PAGE 3: FORGOT PASSWORD -->
+    <div class="page" id="page-forgot">
+      <div class="card-header">
+        <h2>Reset Password 🔑</h2>
+        <p>Enter your registered email to receive a reset OTP</p>
+      </div>
+      <div id="forgot-alert"></div>
+
+      <form id="forgot-form" onsubmit="handleForgotPassword(event)">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <div class="form-input-wrap">
+            <input type="email" class="form-input" id="forgot-email" placeholder="admin@yourstore.com" required>
+            <span class="input-icon">📧</span>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn" id="forgot-btn">
+          <span id="forgot-btn-text">📧 Send Reset OTP</span>
+        </button>
+      </form>
+      <div style="text-align:center; margin-top:16px;">
+        <span class="forgot-link" onclick="showPage('page-login')">← Back to Login</span>
+      </div>
+    </div>
+
+    <!-- PAGE 4: RESET PASSWORD -->
+    <div class="page" id="page-reset">
+      <div class="card-header">
+        <h2>New Password 🛡️</h2>
+        <p>Enter the OTP and your new password</p>
+      </div>
+      <div id="reset-alert"></div>
+      <div id="dev-otp-badge3" class="dev-badge">🧪 Dev Mode OTP: <strong id="dev-otp-val3">------</strong></div>
+
+      <form id="reset-form" onsubmit="handleResetPassword(event)">
+        <div class="form-group">
+          <label class="form-label">OTP Code</label>
+          <div class="form-input-wrap">
+            <input type="text" class="form-input" id="reset-otp" placeholder="Enter 6-digit OTP" maxlength="6" required>
+            <span class="input-icon">🔢</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">New Password</label>
+          <div class="form-input-wrap">
+            <input type="password" class="form-input" id="reset-password" placeholder="Min 8 characters" required>
+            <span class="input-icon" onclick="togglePassword('reset-password', this)" style="cursor:pointer;">👁️</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <div class="form-input-wrap">
+            <input type="password" class="form-input" id="reset-confirm" placeholder="Repeat new password" required>
+            <span class="input-icon">🔒</span>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn" id="reset-btn">
+          <span id="reset-btn-text">🔐 Reset Password</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API = 'http://localhost:5000/api';
+  let currentUsername = '';
+  let otpTimerInterval = null;
+  let failedAttempts = 0;
+
+  // Page navigation
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  function showAlert(containerId, msg, type = 'error') {
+    const icons = { error: '❌', success: '✅', info: 'ℹ️' };
+    document.getElementById(containerId).innerHTML = `
+      <div class="alert alert-${type}">${icons[type]} ${msg}</div>
+    `;
+  }
+
+  function clearAlert(containerId) {
+    document.getElementById(containerId).innerHTML = '';
+  }
+
+  function setLoading(btnId, textId, loading, text) {
+    const btn = document.getElementById(btnId);
+    const textEl = document.getElementById(textId);
+    btn.disabled = loading;
+    textEl.innerHTML = loading ? '<div class="spinner"></div>' : text;
+  }
+
+  function togglePassword(inputId, iconEl) {
+    const input = document.getElementById(inputId);
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    if (typeof iconEl === 'string') {
+      document.getElementById(iconEl).textContent = isText ? '👁️' : '🙈';
+    } else {
+      iconEl.textContent = isText ? '👁️' : '🙈';
+    }
+  }
+
+  // Login Handler
+  async function handleLogin(e) {
+    e.preventDefault();
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+    clearAlert('login-alert');
+    setLoading('login-btn', 'login-btn-text', true, '');
+
+    try {
+      const res = await fetch(`${API}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+
+      if (data.decoy) {
+        // Redirect to decoy dashboard
+        sessionStorage.setItem('decoy_user', username);
+        sessionStorage.setItem('decoy_time', new Date().toISOString());
+        setTimeout(() => window.location.href = 'decoy-dashboard.html', 1200);
+        return;
+      }
+
+      if (data.success && data.requireOtp) {
+        currentUsername = username;
+        // Show dev OTP if available
+        if (data.devOtp) {
+          document.getElementById('dev-otp-badge').style.display = 'block';
+          document.getElementById('dev-otp-val').textContent = data.devOtp;
+          document.getElementById('dev-otp-badge2').style.display = 'block';
+          document.getElementById('dev-otp-val2').textContent = data.devOtp;
+        }
+        document.getElementById('otp-desc').textContent = `OTP sent to ${data.email}`;
+        showPage('page-otp');
+        startOtpTimer(600);
+      } else {
+        failedAttempts++;
+        updateAttemptsBar();
+        showAlert('login-alert', data.message || 'Login failed', 'error');
+      }
+    } catch (err) {
+      showAlert('login-alert', '⚠️ Cannot connect to server. Make sure backend is running on port 5000.', 'error');
+    } finally {
+      setLoading('login-btn', 'login-btn-text', false, '🔐 Sign In Securely');
+    }
+  }
+
+  function updateAttemptsBar() {
+    const indicator = document.getElementById('attempts-indicator');
+    indicator.style.display = 'block';
+    document.getElementById('attempts-text').textContent = `${failedAttempts}/3`;
+    document.getElementById('attempts-fill').style.width = `${(failedAttempts/3)*100}%`;
+  }
+
+  // OTP Handlers
+  function otpMove(el, nextId) {
+    if (el.value && nextId) document.getElementById(nextId).focus();
+  }
+  function otpBack(e, el, prevId) {
+    if (e.key === 'Backspace' && !el.value && prevId) document.getElementById(prevId).focus();
+  }
+
+  function getOTPValue() {
+    return ['o1','o2','o3','o4','o5','o6'].map(id => document.getElementById(id).value).join('');
+  }
+
+  async function handleOTPVerify() {
+    const otp = getOTPValue();
+    if (otp.length !== 6) {
+      showAlert('otp-alert', 'Please enter all 6 digits', 'error'); return;
+    }
+    clearAlert('otp-alert');
+    setLoading('otp-btn', 'otp-btn-text', true, '');
+
+    try {
+      const res = await fetch(`${API}/auth/verify-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: currentUsername, otp })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        sessionStorage.setItem('admin_token', data.token);
+        sessionStorage.setItem('admin_user', JSON.stringify(data.admin));
+        clearInterval(otpTimerInterval);
+        showAlert('otp-alert', '✅ Login successful! Redirecting...', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+      } else {
+        showAlert('otp-alert', data.message || 'Invalid OTP', 'error');
+      }
+    } catch (err) {
+      showAlert('otp-alert', '⚠️ Server error. Please try again.', 'error');
+    } finally {
+      setLoading('otp-btn', 'otp-btn-text', false, '✅ Verify & Login');
+    }
+  }
+
+  function startOtpTimer(seconds) {
+    clearInterval(otpTimerInterval);
+    let remaining = seconds;
+    function update() {
+      const m = Math.floor(remaining / 60);
+      const s = remaining % 60;
+      document.getElementById('otp-countdown').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      if (remaining-- <= 0) {
+        clearInterval(otpTimerInterval);
+        document.getElementById('otp-countdown').textContent = 'Expired';
+        document.getElementById('otp-countdown').style.color = 'var(--danger)';
+      }
+    }
+    update();
+    otpTimerInterval = setInterval(update, 1000);
+  }
+
+  async function resendOTP() {
+    const res = await fetch(`${API}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentUsername, password: document.getElementById('login-password').value })
+    });
+    const data = await res.json();
+    if (data.devOtp) {
+      document.getElementById('dev-otp-val2').textContent = data.devOtp;
+      document.getElementById('dev-otp-badge2').style.display = 'block';
+    }
+    showAlert('otp-alert', '📧 New OTP sent!', 'success');
+    startOtpTimer(600);
+    ['o1','o2','o3','o4','o5','o6'].forEach(id => document.getElementById(id).value = '');
+  }
+
+  // Forgot Password
+  let resetEmail = '';
+  async function handleForgotPassword(e) {
+    e.preventDefault();
+    const email = document.getElementById('forgot-email').value.trim();
+    clearAlert('forgot-alert');
+    setLoading('forgot-btn', 'forgot-btn-text', true, '');
+
+    try {
+      const res = await fetch(`${API}/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      resetEmail = email;
+
+      if (data.devOtp) {
+        document.getElementById('dev-otp-badge3').style.display = 'block';
+        document.getElementById('dev-otp-val3').textContent = data.devOtp;
+      }
+
+      showAlert('forgot-alert', data.message, 'success');
+      setTimeout(() => showPage('page-reset'), 1500);
+    } catch (err) {
+      showAlert('forgot-alert', 'Server error. Please try again.', 'error');
+    } finally {
+      setLoading('forgot-btn', 'forgot-btn-text', false, '📧 Send Reset OTP');
+    }
+  }
+
+  // Reset Password
+  async function handleResetPassword(e) {
+    e.preventDefault();
+    const otp = document.getElementById('reset-otp').value.trim();
+    const newPassword = document.getElementById('reset-password').value;
+    const confirmPassword = document.getElementById('reset-confirm').value;
+
+    if (newPassword !== confirmPassword) {
+      showAlert('reset-alert', 'Passwords do not match', 'error'); return;
+    }
+    if (newPassword.length < 8) {
+      showAlert('reset-alert', 'Password must be at least 8 characters', 'error'); return;
+    }
+
+    clearAlert('reset-alert');
+    setLoading('reset-btn', 'reset-btn-text', true, '');
+
+    try {
+      const res = await fetch(`${API}/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: resetEmail, otp, newPassword })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        showAlert('reset-alert', '✅ Password reset! Redirecting to login...', 'success');
+        setTimeout(() => showPage('page-login'), 2000);
+      } else {
+        showAlert('reset-alert', data.message || 'Reset failed', 'error');
+      }
+    } catch (err) {
+      showAlert('reset-alert', 'Server error. Please try again.', 'error');
+    } finally {
+      setLoading('reset-btn', 'reset-btn-text', false, '🔐 Reset Password');
+    }
+  }
+
+  // Check if already logged in
+  const token = sessionStorage.getItem('admin_token');
+  if (token) window.location.href = 'dashboard.html';
+</script>
+</body>
+</html>
